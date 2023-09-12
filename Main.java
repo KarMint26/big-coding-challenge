@@ -65,9 +65,9 @@ public class Main {
         return ans;
     }
 
-    // Metode utama (main) yang akan dijalankan saat program dijalankan
+    // Metode utama (main) yang akan berjalan saat program dijalankan
     public static void main(String[] args) {
-        // Menampilkan informasi tugas kepada pengguna
+        // Menampilkan informasi tugas kepada pengguna untuk menginputkan sesuai format yaitu misalkan 2:00 p.m.
         System.out.print("Masukkan waktu saat ini (format: HH:mm a.m./p.m.): ");
         
         // Membaca input waktu saat ini dari pengguna
