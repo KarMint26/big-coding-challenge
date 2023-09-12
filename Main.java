@@ -1,61 +1,82 @@
-import java.util.Scanner; // mengimport Scanner dari java.util untuk memproses input atau masukkan
-import java.util.Arrays; // mengimport Arrays untuk tujuan menjadikan array sebagai string
+// Import kelas Scanner dari package java.util untuk memproses input atau masukkan
+import java.util.Scanner;
 
-public class Main // main class atau class utama berjalannya program
-{
-    public static Scanner userInput = new Scanner(System.in); // fungsi atau method untuk memproses input atau masukkan
-    
-    public static int[] timeToEat(String input) { // method atau fungsi untuk mengembalikan nilai selisih jam dan menit
-        int[] ans = new int[2]; // Membuat array untuk menyimpan selisih jam dan menit
+// Import kelas Arrays dari package java.util untuk konversi array menjadi string
+import java.util.Arrays;
 
-        String[] timeParts = input.split(":"); // menjadikan string sebagai array dengan method split
-        int currentHour = Integer.parseInt(timeParts[0]); // mengambil index ke-0 yang merupakan keterangan jam
-        int currentMinute = Integer.parseInt(timeParts[1].split(" ")[0]); // mengambil index ke-1 yang merupakan menit
-        String amOrPm = timeParts[1].split(" ")[1]; // mengambil index ke-1 dan melakukan split untuk mendapatkan keterangan am atau pm
-        
-        int diffHour = 0; // menginisialisasi nilai selisih dari jam
-        int diffMinute = 0; // menginisialisasi nlai selisih dari menit
-        
-        // melakukan pengkondisian dengan if, else, dan else if
-        if (amOrPm.equals("a.m.")) { // jika keterangan a.m. maka dia dihitung dari jam 12 dini hari atau 00:00 sampai 11:59
+// Deklarasi class utama yang akan berisi metode utama (main)
+public class Main {
+
+    // Deklarasi objek Scanner yang akan digunakan untuk input
+    public static Scanner userInput = new Scanner(System.in);
+
+    // Metode timeToEat untuk menghitung selisih waktu hingga makan selanjutnya
+    public static int[] timeToEat(String input) {
+        // Membuat array ans untuk menyimpan selisih jam dan menit
+        int[] ans = new int[2];
+
+        // Memisahkan waktu menjadi bagian jam dan menit dengan delimiter ":"
+        String[] timeParts = input.split(":");
+
+        // Mengambil jam dari bagian pertama array hasil split
+        int currentHour = Integer.parseInt(timeParts[0]);
+
+        // Mengambil menit dari bagian kedua array hasil split, dan menghapus "a.m." atau "p.m." dengan split lagi
+        int currentMinute = Integer.parseInt(timeParts[1].split(" ")[0]);
+
+        // Mengambil "a.m." atau "p.m." dari bagian kedua array hasil split
+        String amOrPm = timeParts[1].split(" ")[1];
+
+        // Menginisialisasi variabel selisih jam dan menit
+        int diffHour = 0;
+        int diffMinute = 0;
+
+        // Melakukan pengkondisian berdasarkan waktu "a.m." atau "p.m."
+        if (amOrPm.equals("a.m.")) {
+            // Jika "a.m.", maka perhitungan dimulai dari jam 00:00
             if (currentHour < 7 || (currentHour == 7 && currentMinute == 0)) {
                 diffHour = 7 - currentHour;
-            } else if(currentHour < 12 && currentHour > 7) {
+            } else if (currentHour < 12 && currentHour > 7) {
                 diffHour = 12 - currentHour;
             }
-        } else if (amOrPm.equals("p.m.")) { // jika keterangan a.m. maka dia dihitung dari jam 12 dini hari atau 12:00 sampai 23:59
+        } else if (amOrPm.equals("p.m.")) {
+            // Jika "p.m.", maka perhitungan dimulai dari jam 12:00
             if (currentHour < 7 || (currentHour == 7 && currentMinute == 0)) {
                 diffHour = 7 - currentHour;
-            } else if(currentHour > 7) {
+            } else if (currentHour > 7) {
                 currentHour -= 7;
                 diffHour = 12 - currentHour;
             }
         }
-        
-        diffMinute = 60 - currentMinute; // selisih menit dilakukan perhitungan 60 menit dikurangi menit sekarang
-        if(currentMinute == 0){ // jika menit sekarang adalah 0 maka selisihnya juga 0
+
+        // Menghitung selisih menit, jika menit bukan 0, maka mengurangkan selisih jam dengan 1
+        diffMinute = 60 - currentMinute;
+        if (currentMinute == 0) {
             diffMinute = 0;
-        } else { // jika menit bukan 0 maka yang dilakukan adalah mengurangi selisih jam dengan 1
+        } else {
             diffHour -= 1;
         }
-        
-        ans[0] = diffHour; // Memasukkan value dari variabel diffHour kedalam index ke 0 dari array int[] ans
-        ans[1] = diffMinute; // Memasukkan value dari variabel diffMinute kedalam index ke 1 dari array int[] ans
-        
-        return ans; // Mengembalikan nilai dari array ans yang berisi jawaban berapa jam dan menitnya
+
+        // Memasukkan nilai selisih jam dan menit ke dalam array ans
+        ans[0] = diffHour;
+        ans[1] = diffMinute;
+
+        // Mengembalikan array ans yang berisi selisih jam dan menit
+        return ans;
     }
-	public static void main(String[] args) { // main method untuk menampilkannya di console
-        // Breakfast at 7:00 a.m. (makan pagi pada jam 07:00)
-        // lunch at 12:00 p.m. (makan siang pada jam 12:00)
-        // dinner at 7:00 p.m. (makan malam pada jam 19:00)
-        // Tugasnya adalah mencari selisih berapa jam dan menit sampai pada makan selanjutnya sesuai rules
-        
-        // Memasukkan waktu saat ini dari pengguna
+
+    // Metode utama (main) yang akan dijalankan saat program dijalankan
+    public static void main(String[] args) {
+        // Menampilkan informasi tugas kepada pengguna
         System.out.print("Masukkan waktu saat ini (format: HH:mm a.m./p.m.): ");
+        
+        // Membaca input waktu saat ini dari pengguna
         String currentTime = userInput.nextLine();
 
-        // Memanggil fungsi timeToEat dan mencetak hasilnya
+        // Memanggil metode timeToEat untuk menghitung selisih waktu hingga makan selanjutnya
         int[] timeUntilNextMeal = timeToEat(currentTime);
+
+        // Menampilkan hasil perhitungan selisih waktu dalam bentuk array dan teks informatif
         System.out.println(Arrays.toString(timeUntilNextMeal) + ", Waktu hingga makan berikutnya: " + timeUntilNextMeal[0] + " jam " + timeUntilNextMeal[1] + " menit");
-	}
+    }
 }
