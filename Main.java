@@ -12,7 +12,7 @@ public class Main {
 
     // Metode timeToEat untuk menghitung selisih waktu hingga makan selanjutnya
     public static int[] timeToEat(String input) {
-        // Membuat array ans untuk menyimpan selisih jam dan menit
+        // Membuat array integer untuk menyimpan selisih jam dan menit
         int[] ans = new int[2];
 
         // Memisahkan waktu menjadi bagian jam dan menit dengan delimiter ":"
